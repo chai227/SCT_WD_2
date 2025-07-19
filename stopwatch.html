@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skill Craft Technology Stop Watch</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #f0f4f8, #dbe9f4);
+      color: #222;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      color: #2e3a59;
+      margin-bottom: 40px;
+    }
+
+    #time {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: rgba(255, 255, 255, 0.6);
+      padding: 30px 40px;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .digit {
+      font-size: 100px;
+      color: #1c1c1c;
+      font-weight: 600;
+      font-family: 'Courier New', Courier, monospace; /* ✅ Equal-width digits */
+      width: 100px; /* ✅ Prevents layout shift */
+      display: inline-block;
+      text-align: center;
+    }
+
+    .txt {
+      font-size: 20px;
+      color: #555;
+      margin-right: 10px;
+      align-self: flex-end;
+    }
+
+    #buttons {
+      margin-top: 40px;
+    }
+
+    .btn {
+      font-size: 16px;
+      padding: 12px 25px;
+      margin: 0 12px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #fff;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    #start {
+      background-color: #1abc9c;
+    }
+
+    #stop {
+      background-color: #3498db;
+    }
+
+    #reset {
+      background-color: #e74c3c;
+    }
+
+    @media (max-width: 600px) {
+      .digit {
+        font-size: 60px;
+        width: 60px;
+      }
+      .txt {
+        font-size: 16px;
+      }
+      .btn {
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Skill Craft Technology<br>Stop Watch</h1>
+    <div id="time">
+      <span class="digit" id="hr">00</span>
+      <span class="txt">Hr</span>
+      <span class="digit" id="min">00</span>
+      <span class="txt">Min</span>
+      <span class="digit" id="sec">00</span>
+      <span class="txt">Sec</span>
+      <span class="digit" id="count">00</span>
+    </div>
+    <div id="buttons">
+      <button class="btn" id="start">Start</button>
+      <button class="btn" id="stop">Stop</button>
+      <button class="btn" id="reset">Reset</button>
+    </div>
+  </div>
+
+  <script>
+    let startBtn = document.getElementById('start');
+    let stopBtn = document.getElementById('stop');
+    let resetBtn = document.getElementById('reset');
+
+    let hour = 0, minute = 0, second = 0, count = 0;
+    let timer = false;
+
+    startBtn.addEventListener('click', function () {
+      if (!timer) {
+        timer = true;
+        stopWatch();
+      }
+    });
+
+    stopBtn.addEventListener('click', function () {
+      timer = false;
+    });
+
+    resetBtn.addEventListener('click', function () {
+      timer = false;
+      hour = 0;
+      minute = 0;
+      second = 0;
+      count = 0;
+      document.getElementById('hr').innerHTML = "00";
+      document.getElementById('min').innerHTML = "00";
+      document.getElementById('sec').innerHTML = "00";
+      document.getElementById('count').innerHTML = "00";
+    });
+
+    function stopWatch() {
+      if (timer) {
+        count++;
+
+        if (count === 100) {
+          second++;
+          count = 0;
+        }
+
+        if (second === 60) {
+          minute++;
+          second = 0;
+        }
+
+        if (minute === 60) {
+          hour++;
+          minute = 0;
+          second = 0;
+        }
+
+        document.getElementById('hr').innerHTML = hour < 10 ? "0" + hour : hour;
+        document.getElementById('min').innerHTML = minute < 10 ? "0" + minute : minute;
+        document.getElementById('sec').innerHTML = second < 10 ? "0" + second : second;
+        document.getElementById('count').innerHTML = count < 10 ? "0" + count : count;
+
+        setTimeout(stopWatch, 10);
+      }
+    }
+  </script>
+</body>
+</html>
